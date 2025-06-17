@@ -7,7 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (session.getAttribute("email") == null) {
+    HttpSession httpSession = request.getSession(false);
+    if (httpSession.getAttribute("email") == null) {
         System.out.println("Unauthorized Access.. Back to Sign In Page");
         response.sendRedirect(request.getContextPath() + "/login.jsp");
         return;
@@ -28,13 +29,13 @@
 <head>
     <title>TrackNResolve | JSP Web App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="lib/normalize.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/lib/normalize.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/ico" href="assets/images/TrackNResolveIcon.ico">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/ico" href="<%= request.getContextPath() %>/assets/images/TrackNResolveIcon.ico">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styles.css">
 
 </head>
 <body>
@@ -43,25 +44,27 @@
     <div class="row">
         <div class="col-md-2 sidebar d-none d-md-block">
             <a href="#" class="sidebar-brand d-flex align-items-center">
-                <img src="assets/images/TrackNResolveIcon.png" alt="Profile" class="profile-img">
+                <%--<img src="assets/images/TrackNResolveIcon.png" alt="Profile" class="profile-img">--%>
+                <img src="<%= request.getContextPath() %>/assets/images/TrackNResolveIcon.png" alt="Profile" class="profile-img">
                 <span>TrackNResolve</span>
             </a>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" href="employeeDashboard.jsp">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/employeeDashboard.jsp">
                         <i class="fas fa-tachometer-alt"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="newComplaint.jsp">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/newComplaint.jsp">
                         <i class="fas fa-plus-circle"></i>
                         File A Complaint
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-clipboard-list"></i>
+                    <%--<a class="nav-link" href="viewComplaint.jsp">--%>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/api/v1/user/complaint/list">
+                    <i class="fas fa-clipboard-list"></i>
                         Complaint Log
                     </a>
                 </li>
@@ -78,7 +81,8 @@
             <nav class="navbar navbar-dark bg-dark d-md-none mb-4">
                 <div class="container-fluid">
                     <div class="d-flex align-items-center">
-                        <img src="assets/images/TrackNResolveIcon.png" alt="Profile" class="profile-img">
+                        <%--<img src="assets/images/TrackNResolveIcon.png" alt="Profile" class="profile-img">--%>
+                        <img src="<%= request.getContextPath() %>/assets/images/TrackNResolveIcon.png" alt="Profile" class="profile-img">
                     </div>
                     <a class="navbar-brand" href="#">TrackNResolve</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
@@ -90,19 +94,19 @@
                 <div class="bg-dark p-3 mb-4 rounded">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active text-white" href="employeeDashboard.jsp">
+                            <a class="nav-link text-white" href="<%= request.getContextPath() %>/employeeDashboard.jsp">
                                 <i class="fas fa-tachometer-alt me-2"></i>
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="newComplaint.jsp">
+                            <a class="nav-link text-white" href="<%= request.getContextPath() %>/newComplaint.jsp">
                                 <i class="fas fa-plus-circle me-2"></i>
                                 File A Complaint
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">
+                            <a class="nav-link text-white" href="<%= request.getContextPath() %>/api/v1/user/complaint/list">
                                 <i class="fas fa-clipboard-list me-2"></i>
                                 Complaint Log
                             </a>
@@ -151,7 +155,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="stat-card overview text-white">
+                    <div class="stat-card overview text-dark">
                         <h5 class="mb-2"> TrackNResolve </h5>
                         <p>
                             The Complaint Management System helps you report and track issues easily. As a user, log in with your email and password, then submit new complaints by filling in the details. You can view, edit, or delete your unresolved complaints anytime. Admins have access to all complaints, update their status, add notes, and manage records. This system makes problem-solving faster and keeps communication clear.

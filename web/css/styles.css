@@ -1,6 +1,7 @@
 body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', Verdana, sans-serif;
+    overflow-x: hidden;
 }
 
 .dashboard-header {
@@ -38,7 +39,8 @@ body {
 }
 
 .overview {
-    background: linear-gradient(135deg, #22c55e, #3b82f6);
+    background: linear-gradient(135deg, #fef9c3, #fef08a);
+    color: #1d1c1c;
 }
 
 .stat-icon {
@@ -60,8 +62,9 @@ body {
     /*
     background-color: white;
     */
-    background: linear-gradient(135deg, #fef9c3, #fef08a);
-    color: #374151;
+    background: linear-gradient(135deg, #22c55e, #3b82f6);
+    /*color: #374151;*/
+    color: #ffffff;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -85,11 +88,18 @@ body {
 }
 
 .sidebar {
-    min-height: 100vh;
+    /*height: 100vh;*/
     background-color: #343a40;
     color: white;
     padding: 20px 0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    z-index: 1000;
 }
 
 .sidebar .nav-link {
@@ -97,6 +107,8 @@ body {
     padding: 10px 20px;
     margin: 5px 0;
     border-radius: 5px;
+    display: block;
+    position: static;
     transition: all 0.3s;
 }
 
@@ -105,10 +117,12 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-.sidebar .nav-link.active {
+.sidebar .nav-link:focus,
+.sidebar .nav-link:active {
     color: white;
-    background-color: #0d6efd;
+    background-color: #1d1c1c;
 }
+
 
 .sidebar .nav-link i {
     margin-right: 10px;
@@ -128,6 +142,7 @@ body {
 
 .main-content {
     padding: 20px;
+    overflow-x: hidden;
 }
 
 .profile-img {
