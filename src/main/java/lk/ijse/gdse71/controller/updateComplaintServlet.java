@@ -111,7 +111,7 @@ public class updateComplaintServlet extends HttpServlet {
 
         try {
 
-            boolean isUpdated = complaintModel.updateUnresolvedComplaintsByUser(complaintId, userId, title, desc, status);
+            boolean isUpdated = complaintModel.updateUnresolvedComplaintsByUser(complaintId, title, desc, status);
 
             if (isUpdated) {
                 session.setAttribute("flash_success", "Complaint updated Successfully");

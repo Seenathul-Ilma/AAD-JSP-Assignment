@@ -63,8 +63,9 @@ public class ComplaintModel {
         }
     }
 
-    public boolean updateUnresolvedComplaintsByUser(String complaintId, String userId, String title, String description, String status) {
-        String sql = "UPDATE complaint SET title = ?, description = ?, status = ? WHERE complaint_id = ? AND user_id = ?";
+    public boolean updateUnresolvedComplaintsByUser(String complaintId, String title, String description, String status) {
+        //String sql = "UPDATE complaint SET title = ?, description = ?, status = ? WHERE complaint_id = ? AND user_id = ?";
+        String sql = "UPDATE complaint SET title = ?, description = ?, status = ? WHERE complaint_id = ?";
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -73,7 +74,7 @@ public class ComplaintModel {
             stmt.setString(2, description);
             stmt.setString(3, status);
             stmt.setString(4, complaintId);
-            stmt.setString(5, userId);
+            //stmt.setString(5, userId);
 
             return stmt.executeUpdate() > 0;
 

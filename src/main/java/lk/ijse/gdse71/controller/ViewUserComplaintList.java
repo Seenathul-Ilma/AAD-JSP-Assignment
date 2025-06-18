@@ -54,31 +54,6 @@ public class ViewUserComplaintList extends HttpServlet {
             req.setAttribute("complaintDTOS", complaintDTOS);
             req.getRequestDispatcher("/viewComplaint.jsp").forward(req, resp);
 
-
-            /*try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(
-                         "SELECT title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ? ORDER BY date_submitted DESC"
-                 )) {
-                stmt.setString(1, userId);
-                ResultSet rs = stmt.executeQuery();
-
-                // Build a list of complaint
-                List<ComplaintDTO> userComplaintList = new ArrayList<>();
-
-                while (rs.next()) {
-                    ComplaintDTO userComplaint = new ComplaintDTO();
-                    userComplaint.setTitle(rs.getString("title"));
-                    userComplaint.setDescription(rs.getString("description"));
-                    userComplaint.setDate_submitted(rs.getDate("date_submitted").toLocalDate());
-                    userComplaint.setStatus(rs.getString("status"));
-                    userComplaint.setAdmin_remarks(rs.getString("admin_remarks"));
-
-                    userComplaintList.add(userComplaint);
-                }
-
-                req.setAttribute("userComplaintList", userComplaintList);
-                req.getRequestDispatcher("/viewComplaint.jsp").forward(req, resp);
-            }*/
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Failed load your complaint list.");
