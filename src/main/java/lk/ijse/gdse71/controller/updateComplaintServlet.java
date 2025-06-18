@@ -7,18 +7,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lk.ijse.gdse71.model.UserComplaintList;
+import lk.ijse.gdse71.dto.ComplaintDTO;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * --------------------------------------------
@@ -60,14 +57,14 @@ public class updateComplaintServlet extends HttpServlet {
                 ResultSet rs = stmt.executeQuery();
 
                 // Build a list of complaint
-                List<UserComplaintList> userComplaintList = new ArrayList<>();
+                List<ComplaintDTO> userComplaintList = new ArrayList<>();
 
                 while (rs.next()) {
-                    UserComplaintList userComplaint = new UserComplaintList();
+                    ComplaintDTO userComplaint = new ComplaintDTO();
                     userComplaint.setComplaint_id(rs.getString("complaint_id"));
                     userComplaint.setTitle(rs.getString("title"));
                     userComplaint.setDescription(rs.getString("description"));
-                    userComplaint.setDate_submitted(rs.getDate("date_submitted"));
+                    userComplaint.setDate_submitted(rs.getDate("date_submitted").toLocalDate());
                     userComplaint.setStatus(rs.getString("status"));
                     userComplaint.setAdmin_remarks(rs.getString("admin_remarks"));
 

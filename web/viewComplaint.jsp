@@ -1,4 +1,4 @@
-<%@ page import="lk.ijse.gdse71.model.UserComplaintList" %>
+<%@ page import="lk.ijse.gdse71.dto.ComplaintDTO" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: user
@@ -15,7 +15,7 @@
         return;
     }
 
-    List<UserComplaintList> userComplaintList = (List<UserComplaintList>) request.getAttribute("userComplaintList");
+    List<ComplaintDTO> userComplaintList = (List<ComplaintDTO>) request.getAttribute("userComplaintList");
     if (userComplaintList == null) {
         //response.sendRedirect(request.getContextPath() + "/employeeDashboard.jsp");
         System.out.println("Complaint table is empty..!");
@@ -152,7 +152,7 @@
                         <%--<tbody id="user-complaint-table">--%>
                         <tbody id="user-complaint-table" data-url="/api/v1/user/complaint/list">
                         <% for (int i = 0; i < userComplaintList.size(); i++) {
-                                UserComplaintList userComplaint = userComplaintList.get(i);
+                                ComplaintDTO userComplaint = userComplaintList.get(i);
                             %>
                             <tr>
                                 <th scope="row"><%= i+1 %></th>

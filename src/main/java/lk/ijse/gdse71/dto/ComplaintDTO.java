@@ -1,7 +1,8 @@
-package lk.ijse.gdse71.model;
+package lk.ijse.gdse71.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -20,11 +21,12 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class UserComplaintList {
+public class ComplaintDTO {
+    private String complaint_id;
+    private String user_id;
     private String title;
     private String description;
-    private Date date_submitted;
+    private LocalDate date_submitted;
     private String status;
     private String admin_remarks;
-    private String complaint_id;
 }
