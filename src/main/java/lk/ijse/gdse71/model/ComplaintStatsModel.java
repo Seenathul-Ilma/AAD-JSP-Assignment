@@ -5,6 +5,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * --------------------------------------------
@@ -43,5 +44,28 @@ public class ComplaintStatsModel {
 
             return rs.next() ? rs.getInt(1) : 0;
         }
+    }
+
+    private int getCount(String query) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getResolvedComplaints() {
+        return getCount("SELECT COUNT(*) FROM complaint WHERE status = 'Resolved' AND user_id = ?");
+    }
+
+    public int getPendingComplaints() {
+        return getCount("SELECT COUNT(*) FROM complaint WHERE status = 'Unresolved' AND user_id = ?");
+    }
+
+    public int getTotalComplaints() {
+        return getCount("SELECT COUNT(*) FROM complaint WHERE user_id = ?");
     }
 }
