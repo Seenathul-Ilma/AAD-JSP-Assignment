@@ -125,12 +125,6 @@
                 <h1>Reported Complaints</h1>
             </div>
 
-            <% if (request.getAttribute("error") != null) { %>
-            <div class="alert alert-danger">
-                <%= request.getAttribute("error") %>
-            </div>
-            <% } %>
-
             <div class="container col-lg-10 col-md-10 ms-sm-auto">
                 <div class="form-container bg-white">
                     <div class="form-header">
@@ -169,7 +163,7 @@
                             <label for="description" class="form-label required-field">Description</label>
                             <%--<textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter detailed description" required></textarea>--%>
                             <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter detailed description" required><%=
-                                request.getParameter("description") != null ? request.getParameter("description") : "" %></textarea>
+                            request.getParameter("description") != null ? request.getParameter("description") : "" %></textarea>
                             <div class="form-text">Provide complete details about this record</div>
                         </div>
 
@@ -182,7 +176,7 @@
                         <div class="mb-4">
                             <label for="admin_remarks" class="form-label">Admin Remarks</label>
                             <textarea class="form-control" id="admin_remarks" name="admin_remarks" rows="2" placeholder="Enter admin remarks (optional)" readonly><%=
-                                request.getParameter("admin_remarks") != null ? request.getParameter("admin_remarks") : "" %></textarea>
+                            request.getParameter("admin_remarks") != null ? request.getParameter("admin_remarks") : "" %></textarea>
                             <div class="form-text">Only admin can update remarks</div>
                         </div>
 
@@ -201,20 +195,21 @@
                                     <i class="bi bi-arrow-counterclockwise"></i> Reset
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> Submit
+                                    <i class="bi bi-save"></i> update
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
 
                 <div class="form-container bg-white">
                     <div class="form-header">
-                        <h2><i class="bi bi-file-earmark-text"></i> Record Information</h2>
+                        <h2><i class="bi bi-file-earmark-text"></i> Record List</h2>
                         <p class="text-muted">Here’s a list of unresolved complaints you’ve submitted</p>
                     </div>
 
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover text-center">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -249,9 +244,14 @@
                                     <input type="hidden" name="title" value="<%= userComplaint.getTitle() %>">
                                     <input type="hidden" name="description" value="<%= userComplaint.getDescription() %>">
                                     <input type="hidden" name="admin_remarks" value="<%= userComplaint.getAdmin_remarks() %>">
-                                    <button type="submit" class="btn btn-outline-warning btn-sm"> Update </button>
+                                    <button type="submit" class="btn btn-outline-success btn-sm"> Update </button>
                                 </form>
-                                <button type="submit" class="btn btn-outline-danger btn-sm"> Delete </button>
+                                <form method="post" action="<%= request.getContextPath() %>/api/v1/delete/user/complaint" class="d-inline">
+                                    <input type="hidden" name="complaint_id" value="<%= userComplaint.getComplaint_id() %>">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm"
+                                            onclick="return confirm('Are you sure you want to delete this complaint?')"> Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         <% } %>

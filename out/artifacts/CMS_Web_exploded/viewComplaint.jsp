@@ -138,7 +138,7 @@
                         <p class="text-muted">Here’s a list of complaints you’ve submitted</p>
                     </div>
 
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover text-center">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>

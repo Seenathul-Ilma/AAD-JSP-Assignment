@@ -100,12 +100,6 @@ public class updateComplaintServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String title = req.getParameter("title");
-        String desc = req.getParameter("description");
-        //String admin_remark = "";
-        //String status = "Unresolved";
-        String complaintId = req.getParameter("complaint_id");
-        //String date = req.getParameter("date_submitted");
 
         HttpSession session = req.getSession(false);
         String userId = (String) session.getAttribute("user_id");
@@ -113,6 +107,20 @@ public class updateComplaintServlet extends HttpServlet {
         if (userId == null) {
             //resp.sendRedirect("login.jsp");
             resp.sendRedirect(resp.encodeRedirectURL( req.getContextPath() + "/login.jsp"));
+            return;
+        }
+
+        String title = req.getParameter("title");
+        String desc = req.getParameter("description");
+        //String admin_remark = "";
+        //String status = "Unresolved";
+        String complaintId = req.getParameter("complaint_id");
+        //String date = req.getParameter("date_submitted");
+
+        if (complaintId == null || complaintId.isEmpty()) {
+            session.setAttribute("flash_error", "No complaint selected for update");
+            //req.getRequestDispatcher("/viewComplaint.jsp").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
             return;
         }
 
@@ -152,7 +160,7 @@ public class updateComplaintServlet extends HttpServlet {
             e.printStackTrace();
             //req.setAttribute("error", "An error occurred: " + e.getMessage());
             //req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
-            session.setAttribute("flash_error", "Something wen wrong..!");
+            session.setAttribute("flash_error", "Something went wrong..!");
             resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
         }
     }
