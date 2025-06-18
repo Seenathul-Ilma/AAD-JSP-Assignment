@@ -49,7 +49,7 @@ public class ViewUserComplaintList extends HttpServlet {
 
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement stmt = connection.prepareStatement(
-                         "SELECT title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ?"
+                         "SELECT title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ? ORDER BY date_submitted DESC"
                  )) {
                 stmt.setString(1, userId);
                 ResultSet rs = stmt.executeQuery();

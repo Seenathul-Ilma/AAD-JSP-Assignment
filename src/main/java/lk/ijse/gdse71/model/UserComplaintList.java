@@ -26,4 +26,5 @@ public class UserComplaintList {
     private Date date_submitted;
     private String status;
     private String admin_remarks;
+    private String complaint_id;
 }
