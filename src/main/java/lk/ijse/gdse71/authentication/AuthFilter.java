@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.controller;
+package lk.ijse.gdse71.authentication;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;

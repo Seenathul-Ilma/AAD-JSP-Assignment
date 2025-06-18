@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.controller;
+package lk.ijse.gdse71.util;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
