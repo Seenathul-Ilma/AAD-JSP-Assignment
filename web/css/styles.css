@@ -38,8 +38,8 @@ body {
     background: linear-gradient(135deg, #f46b45 0%, #eea849 100%);
 }
 
-.overview {
-    background: linear-gradient(135deg, #fef9c3, #fef08a);
+#overview {
+    background: linear-gradient(135deg, #13433f 0%, #038a72 100%);
     color: #1d1c1c;
 }
 
@@ -62,9 +62,8 @@ body {
     /*
     background-color: white;
     */
-    background: linear-gradient(135deg, #22c55e, #3b82f6);
     /*color: #374151;*/
-    color: #ffffff;
+    background: linear-gradient(135deg, #37c16a, #3b82f6);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

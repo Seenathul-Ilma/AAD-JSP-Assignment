@@ -139,6 +139,13 @@
                         : "User Role";
             %>
 
+            <% if (request.getAttribute("error") != null) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= request.getAttribute("error") %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+
             <div class="container">
                 <div class="row mb-4">
                     <div class="col-md-6">
@@ -156,7 +163,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="stat-card overview text-dark">
+                    <div class="stat-card text-dark" id="overview">
                         <h5 class="mb-2"> TrackNResolve </h5>
                         <p>
                             The Complaint Management System helps you report and track issues easily. As a user, log in with your email and password, then submit new complaints by filling in the details. You can view, edit, or delete your unresolved complaints anytime. Admins have access to all complaints, update their status, add notes, and manage records. This system makes problem-solving faster and keeps communication clear.
