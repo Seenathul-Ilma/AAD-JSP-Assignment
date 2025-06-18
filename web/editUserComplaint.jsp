@@ -15,8 +15,8 @@
         return;
     }
 
-    List<ComplaintDTO> userComplaintList = (List<ComplaintDTO>) request.getAttribute("userComplaintList");
-    if (userComplaintList == null) {
+    List<ComplaintDTO> userComplaintDTOS = (List<ComplaintDTO>) request.getAttribute("complaintDTOS");
+    if (userComplaintDTOS == null) {
         //response.sendRedirect(request.getContextPath() + "/employeeDashboard.jsp");
         System.out.println("Complaint table is empty..!");
         return;
@@ -223,8 +223,8 @@
                         </thead>
                         <%--<tbody id="user-complaint-table">--%>
                         <tbody id="user-complaint-table" data-url="/api/v1/update/complaint">
-                        <% for (int i = 0; i < userComplaintList.size(); i++) {
-                            ComplaintDTO userComplaint = userComplaintList.get(i);
+                        <% for (int i = 0; i < userComplaintDTOS.size(); i++) {
+                            ComplaintDTO userComplaint = userComplaintDTOS.get(i);
                         %>
                         <tr>
                             <th scope="row"><%= i+1 %></th>
@@ -256,7 +256,7 @@
                         </tr>
                         <% } %>
 
-                        <% if (userComplaintList.isEmpty()) { %>
+                        <% if (userComplaintDTOS.isEmpty()) { %>
                         <tr>
                             <td colspan="6" class="text-center">No complaints found</td>
                         </tr>

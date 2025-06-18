@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lk.ijse.gdse71.dto.ComplaintDTO;
+import lk.ijse.gdse71.model.ComplaintModel;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
@@ -35,62 +36,42 @@ public class updateComplaintServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
 
-        if (session == null) {
+        if (session == null || session.getAttribute("user_id") == null) {
             //resp.sendRedirect("login.jsp");
             resp.sendRedirect(resp.encodeRedirectURL( req.getContextPath() + "/login.jsp"));
             return;
         }
 
-        String userId = (String) session.getAttribute("user_id");
+        String userId = session.getAttribute("user_id").toString();
         System.out.println("The user Id is: "+ userId);
 
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
+
+        ComplaintModel complaintModel = new ComplaintModel(dataSource);
+
         try {
-            ServletContext servletContext = req.getServletContext();
-            BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
+            List<ComplaintDTO> complaintDTOS = complaintModel.getAllUnresolvedComplaintsByUser(userId, "Unresolved");
+            req.setAttribute("complaintDTOS", complaintDTOS);
 
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(
-                         "SELECT complaint_id, title, description, date_submitted, status, admin_remarks " +
-                                 "FROM complaint WHERE status = ? AND user_id = ? ORDER BY date_submitted DESC"                 )) {
-                stmt.setString(1, "Unresolved");
-                stmt.setString(2, userId);
-                ResultSet rs = stmt.executeQuery();
-
-                // Build a list of complaint
-                List<ComplaintDTO> userComplaintList = new ArrayList<>();
-
-                while (rs.next()) {
-                    ComplaintDTO userComplaint = new ComplaintDTO();
-                    userComplaint.setComplaint_id(rs.getString("complaint_id"));
-                    userComplaint.setTitle(rs.getString("title"));
-                    userComplaint.setDescription(rs.getString("description"));
-                    userComplaint.setDate_submitted(rs.getDate("date_submitted").toLocalDate());
-                    userComplaint.setStatus(rs.getString("status"));
-                    userComplaint.setAdmin_remarks(rs.getString("admin_remarks"));
-
-                    userComplaintList.add(userComplaint);
-                }
-
-                req.setAttribute("userComplaintList", userComplaintList);
-
-                Object success = session.getAttribute("flash_success");
-                if (success != null) {
-                    req.setAttribute("success", success);
-                    session.removeAttribute("flash_success");
-                }
-
-                Object error = session.getAttribute("flash_error");
-                if (error != null) {
-                    req.setAttribute("error", error);
-                    session.removeAttribute("flash_error");
-                }
-
-                req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
-
+            Object success = session.getAttribute("flash_success");
+            if (success != null) {
+                req.setAttribute("success", success);
+                session.removeAttribute("flash_success");
             }
+
+            Object error = session.getAttribute("flash_error");
+            if (error != null) {
+                req.setAttribute("error", error);
+                session.removeAttribute("flash_error");
+            }
+
+            req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
+
         } catch (Exception e) {
-            req.setAttribute("error", "Failed load your complaint list.");
             e.printStackTrace();
+            req.setAttribute("error", "Failed load your unresolved complaint list.");
+            req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
         }
 
     }
