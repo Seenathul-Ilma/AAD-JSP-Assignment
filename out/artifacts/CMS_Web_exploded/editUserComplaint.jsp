@@ -243,6 +243,7 @@
                                     <input type="hidden" name="complaint_id" value="<%= userComplaint.getComplaint_id() %>">
                                     <input type="hidden" name="title" value="<%= userComplaint.getTitle() %>">
                                     <input type="hidden" name="description" value="<%= userComplaint.getDescription() %>">
+                                    <input type="hidden" name="status" value="<%= userComplaint.getStatus() %>">
                                     <input type="hidden" name="admin_remarks" value="<%= userComplaint.getAdmin_remarks() %>">
                                     <button type="submit" class="btn btn-outline-success btn-sm"> Update </button>
                                 </form>

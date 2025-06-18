@@ -80,18 +80,19 @@ public class updateComplaintServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession(false);
-        String userId = (String) session.getAttribute("user_id");
 
-        if (userId == null) {
+        if (session == null || session.getAttribute("user_id") == null) {
             //resp.sendRedirect("login.jsp");
             resp.sendRedirect(resp.encodeRedirectURL( req.getContextPath() + "/login.jsp"));
             return;
         }
 
+        String userId = session.getAttribute("user_id").toString();
+        System.out.println("The user Id is: "+ userId);
+
         String title = req.getParameter("title");
         String desc = req.getParameter("description");
-        //String admin_remark = "";
-        //String status = "Unresolved";
+        String status = req.getParameter("status");
         String complaintId = req.getParameter("complaint_id");
         //String date = req.getParameter("date_submitted");
 
@@ -102,38 +103,24 @@ public class updateComplaintServlet extends HttpServlet {
             return;
         }
 
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
+
+        ComplaintModel complaintModel = new ComplaintModel(dataSource);
+
+
         try {
-            ServletContext servletContext = req.getServletContext();
-            BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
 
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(
-                         "UPDATE complaint SET title = ?, description = ? WHERE complaint_id = ? AND user_id = ?"
-                 )) {
+            boolean isUpdated = complaintModel.updateUnresolvedComplaintsByUser(complaintId, userId, title, desc, status);
 
-                stmt.setString(1, title);
-                stmt.setString(2, desc);
-                stmt.setString(3, complaintId);
-                stmt.setString(4, userId);
-
-                int executed = stmt.executeUpdate();
-                if (executed > 0) {
-                    //req.setAttribute("success", "Complaint updated Successfully");
-
-                    //req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
-                    //resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");   // - form cleared, but lost success msg
-
-                    session.setAttribute("flash_success", "Complaint updated Successfully");
-                    resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
-
-                } else {
-                    //req.setAttribute("error", "Failed to submit complaint. Please try again.");
-                    //req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
-                    session.setAttribute("flash_error", "Failed to update complaint. Please try again.");
-                    resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
-                    resp.getWriter().write("Failed to update complaint. Please try again.");
-                }
+            if (isUpdated) {
+                session.setAttribute("flash_success", "Complaint updated Successfully");
+            } else {
+                session.setAttribute("flash_error", "Failed to update complaint");
             }
+
+            resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
+
         } catch (Exception e) {
             e.printStackTrace();
             //req.setAttribute("error", "An error occurred: " + e.getMessage());
