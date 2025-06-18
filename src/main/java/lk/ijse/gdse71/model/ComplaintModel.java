@@ -48,6 +48,21 @@ public class ComplaintModel {
         }
     }
 
+    public boolean deleteComplaint(String complaint_id) {
+        String sql = "DELETE FROM complaint WHERE complaint_id = ?";
+
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, complaint_id);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean updateUnresolvedComplaintsByUser(String complaintId, String userId, String title, String description, String status) {
         String sql = "UPDATE complaint SET title = ?, description = ?, status = ? WHERE complaint_id = ? AND user_id = ?";
 

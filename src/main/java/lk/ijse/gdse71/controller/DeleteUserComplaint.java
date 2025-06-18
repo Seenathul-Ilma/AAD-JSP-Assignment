@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lk.ijse.gdse71.model.ComplaintModel;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
@@ -56,12 +57,15 @@ public class DeleteUserComplaint extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
-        String userId = (String) session.getAttribute("user_id");
 
-        if (userId == null) {
+        if (session == null || session.getAttribute("user_id") == null) {
+            //resp.sendRedirect("login.jsp");
             resp.sendRedirect(resp.encodeRedirectURL( req.getContextPath() + "/login.jsp"));
             return;
         }
+
+        String userId = session.getAttribute("user_id").toString();
+        System.out.println("The user Id is: "+ userId);
 
         String complaintId = req.getParameter("complaint_id");
 
@@ -74,30 +78,22 @@ public class DeleteUserComplaint extends HttpServlet {
         ServletContext servletContext = req.getServletContext();
         BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(
-                     "DELETE FROM complaint WHERE complaint_id = ? AND user_id = ?"
-             )) {
+        ComplaintModel complaintModel = new ComplaintModel(dataSource);
 
-            stmt.setString(1, complaintId);
-            stmt.setString(2, userId);
+        try {
+            boolean isDeleted = complaintModel.deleteComplaint(complaintId);
 
-            int rowsDeleted = stmt.executeUpdate();
-
-            if (rowsDeleted > 0) {
+            if (isDeleted) {
                 session.setAttribute("flash_success", "Complaint deleted Successfully");
-                resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
-
             } else {
-                session.setAttribute("flash_error", "Failed to delete complaint. Please try again.");
-                resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
-                resp.getWriter().write("Failed to delete complaint. Please try again.");
+                session.setAttribute("flash_error", "Failed to delete complaint.");
             }
-        } catch (SQLException e) {
-            session.setAttribute("flash_error", "Something went wrong..!");
-            resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            session.setAttribute("flash_error", "Something went wrong!");
+            e.printStackTrace();
         }
+
+        resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
 
     }
 }
