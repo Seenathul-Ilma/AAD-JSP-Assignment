@@ -3,11 +3,10 @@ package lk.ijse.gdse71.model;
 import lk.ijse.gdse71.dto.ComplaintDTO;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -48,5 +47,38 @@ public class ComplaintModel {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public List<ComplaintDTO> getAllComplaintsByUser(String userId) {
+        List<ComplaintDTO> complaintDTOS = new ArrayList<>();
+
+        String sql = "SELECT complaint_id, user_id, title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ? ORDER BY date_submitted DESC";
+        String sqlQuery = "SELECT * FROM complaint WHERE user_id = ? ORDER BY date_submitted DESC";
+
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, userId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                ComplaintDTO complaintDTO = new ComplaintDTO();
+                complaintDTO.setComplaint_id(rs.getString("complaint_id"));
+                complaintDTO.setUser_id(rs.getString("user_id"));
+                complaintDTO.setTitle(rs.getString("title"));
+                complaintDTO.setDescription(rs.getString("description"));
+                complaintDTO.setDate_submitted(rs.getDate("date_submitted").toLocalDate());
+                complaintDTO.setStatus(rs.getString("status"));
+                complaintDTO.setAdmin_remarks(rs.getString("admin_remarks"));
+
+                complaintDTOS.add(complaintDTO);
+            }
+
+            return complaintDTOS;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lk.ijse.gdse71.dto.ComplaintDTO;
+import lk.ijse.gdse71.model.ComplaintModel;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
@@ -34,20 +35,27 @@ public class ViewUserComplaintList extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
 
-        if (session == null) {
+        if (session == null || session.getAttribute("user_id") == null) {
             //resp.sendRedirect("login.jsp");
             resp.sendRedirect(resp.encodeRedirectURL( req.getContextPath() + "/login.jsp"));
             return;
         }
 
-        String userId = (String) session.getAttribute("user_id");
+        String userId = session.getAttribute("user_id").toString();
         System.out.println("The user Id is: "+ userId);
 
-        try {
-            ServletContext servletContext = req.getServletContext();
-            BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
 
-            try (Connection connection = dataSource.getConnection();
+        ComplaintModel complaintModel = new ComplaintModel(dataSource);
+
+        try {
+            List<ComplaintDTO> complaintDTOS = complaintModel.getAllComplaintsByUser(userId);
+            req.setAttribute("complaintDTOS", complaintDTOS);
+            req.getRequestDispatcher("/viewComplaint.jsp").forward(req, resp);
+
+
+            /*try (Connection connection = dataSource.getConnection();
                  PreparedStatement stmt = connection.prepareStatement(
                          "SELECT title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ? ORDER BY date_submitted DESC"
                  )) {
@@ -70,10 +78,11 @@ public class ViewUserComplaintList extends HttpServlet {
 
                 req.setAttribute("userComplaintList", userComplaintList);
                 req.getRequestDispatcher("/viewComplaint.jsp").forward(req, resp);
-            }
+            }*/
         } catch (Exception e) {
-            req.setAttribute("error", "Failed load your complaint list.");
             e.printStackTrace();
+            req.setAttribute("error", "Failed load your complaint list.");
+            req.getRequestDispatcher("/viewComplaint.jsp").forward(req, resp);
         }
 
     }
