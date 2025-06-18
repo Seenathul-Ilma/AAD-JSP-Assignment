@@ -39,8 +39,9 @@ body {
 }
 
 #overview {
-    background: linear-gradient(135deg, #13433f 0%, #038a72 100%);
-    color: #1d1c1c;
+    background: linear-gradient(135deg, #2c756f 0%, #038a72 100%);
+    /*color: #1d1c1c;*/
+    color: white;
 }
 
 .stat-icon {

@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <div class="stat-card text-dark" id="overview">
+                    <div class="stat-card text-white" id="overview">
                         <h5 class="mb-2"> TrackNResolve </h5>
                         <p>
                             The Complaint Management System helps you report and track issues easily. As a user, log in with your email and password, then submit new complaints by filling in the details. You can view, edit, or delete your unresolved complaints anytime. Admins have access to all complaints, update their status, add notes, and manage records. This system makes problem-solving faster and keeps communication clear.
@@ -206,8 +206,8 @@
 </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"crossorigin="anonymous"></script>
-    <script src="lib/jquery-3.7.1.min.js"></script>
-    <script src="js/validation.js"></script>
+    <script src="<%= request.getContextPath() %>/lib/jquery-3.7.1.min.js"></script>
+    <script src="<%= request.getContextPath() %>/js/validation.js"></script>
 
 </body>
 </html>
