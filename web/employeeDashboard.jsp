@@ -40,7 +40,7 @@
 </head>
 <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid overflow-hidden">
     <div class="row">
         <div class="col-md-2 sidebar d-none d-md-block">
             <a href="#" class="sidebar-brand d-flex align-items-center">

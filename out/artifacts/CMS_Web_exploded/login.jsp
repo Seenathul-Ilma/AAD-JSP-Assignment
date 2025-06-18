@@ -35,8 +35,9 @@
             <form action="<%= request.getContextPath() %>/api/v1/signin" method="post">
 
                 <% if (request.getAttribute("error") != null) { %>
-                <div class="alert alert-danger">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <%= request.getAttribute("error") %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <% } %>
 

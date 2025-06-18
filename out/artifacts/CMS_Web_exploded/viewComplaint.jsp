@@ -38,7 +38,7 @@
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid overflow-hidden">
     <div class="row">
         <div class="col-md-2 sidebar d-none d-md-block">
             <a href="#" class="sidebar-brand d-flex align-items-center">
@@ -125,14 +125,13 @@
                 <h1>Reported Complaints</h1>
             </div>
 
-            <div class="container">
+            <% if (request.getAttribute("error") != null) { %>
+            <div class="alert alert-danger">
+                <%= request.getAttribute("error") %>
+            </div>
+            <% } %>
 
-                <% if (request.getAttribute("error") != null) { %>
-                <div class="alert alert-danger">
-                    <%= request.getAttribute("error") %>
-                </div>
-                <% } %>
-
+            <div class="container col-lg-10 col-md-10 ms-sm-auto">
                 <div class="form-container bg-white">
                     <div class="form-header">
                         <h2><i class="bi bi-file-earmark-text"></i> Record Information</h2>

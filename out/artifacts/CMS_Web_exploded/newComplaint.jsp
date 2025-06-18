@@ -29,7 +29,7 @@
 </head>
 <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid overflow-hidden">
         <div class="row">
             <div class="col-md-2 sidebar d-none d-md-block">
                 <a href="#" class="sidebar-brand d-flex align-items-center">
@@ -125,8 +125,16 @@
                         <form action="<%= request.getContextPath() %>/api/v1/new/complaint" method="post">
 
                             <% if (request.getAttribute("error") != null) { %>
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <%= request.getAttribute("error") %>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <% } %>
+
+                            <% if (request.getAttribute("success") != null) { %>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <%= request.getAttribute("success") %>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             <% } %>
 

@@ -42,7 +42,7 @@ public class NewComplaintServlet extends HttpServlet {
         String userId = (String) session.getAttribute("user_id");
 
         if (userId == null) {
-            resp.sendRedirect("login.jsp");
+            //resp.sendRedirect("login.jsp");
             resp.sendRedirect(resp.encodeRedirectURL( req.getContextPath() + "/login.jsp"));
             return;
         }
@@ -79,13 +79,19 @@ public class NewComplaintServlet extends HttpServlet {
                     System.out.println("User Email In Session: " + userEmail);
                     System.out.println("User Role In Session: " + userRole);
 
+                    req.setAttribute("success", "Complaint saved Successfully");
+                    req.getRequestDispatcher("/newComplaint.jsp").forward(req, resp);
+
                 } else {
+                    req.setAttribute("error", "Failed to submit complaint. Please try again.");
+                    req.getRequestDispatcher("/newComplaint.jsp").forward(req, resp);
                     resp.getWriter().write("Complaint submission failed.");
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            resp.getWriter().write("Error: " + e.getMessage());
+            req.setAttribute("error", "An error occurred: " + e.getMessage());
+            req.getRequestDispatcher("/newComplaint.jsp").forward(req, resp);
         }
     }
 
