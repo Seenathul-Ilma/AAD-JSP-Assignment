@@ -125,146 +125,150 @@
                 <h1>Reported Complaints</h1>
             </div>
 
-            <div class="container col-lg-10 col-md-10 ms-sm-auto">
-                <div class="form-container bg-white">
-                    <div class="form-header">
-                        <h2><i class="bi bi-file-earmark-text"></i> Record Information</h2>
-                        <p class="text-muted">Please fill in the details below</p>
+            <div class="container-fluid px-4">
+                <div class="expanded-form-container bg-white">
+                    <div class="form-header-expanded">
+                        <h2><i class="bi bi-file-earmark-text me-2"></i> Record Information</h2>
+                        <p class="text-muted mb-2">Please fill in the details below</p>
                     </div>
 
-                    <form action="<%= request.getContextPath() %>/api/v1/update/complaint" method="post">
+                    <div class="table-responsive">
+                        <form action="<%= request.getContextPath() %>/api/v1/update/complaint" method="post">
 
-                        <% if (request.getAttribute("error") != null) { %>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <%= request.getAttribute("error") %>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <% } %>
+                            <% if (request.getAttribute("error") != null) { %>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <%= request.getAttribute("error") %>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <% } %>
 
-                        <% if (request.getAttribute("success") != null) { %>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <%= request.getAttribute("success") %>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <% } %>
+                            <% if (request.getAttribute("success") != null) { %>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <%= request.getAttribute("success") %>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <% } %>
 
-                        <input type="hidden" name="complaint_id" value="<%= request.getParameter("complaint_id") != null ? request.getParameter("complaint_id") : "" %>">
+                            <input type="hidden" name="complaint_id" value="<%= request.getParameter("complaint_id") != null ? request.getParameter("complaint_id") : "" %>">
 
-                        <div class="mb-4">
-                            <label for="title" class="form-label required-field">Title</label>
-                            <%--<input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="Enter title" required>--%>
-                            <input type="text" class="form-control form-control-lg" id="title" name="title"
-                                   value="<%= request.getParameter("title") != null ? request.getParameter("title") : "" %>"
-                                   placeholder="Enter title" required>
-                            <div class="form-text">A descriptive title for this record</div>
-                        </div>
+                            <div class="mb-4">
+                                <label for="title" class="form-label required-field">Title</label>
+                                <%--<input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="Enter title" required>--%>
+                                <input type="text" class="form-control form-control-lg" id="title" name="title"
+                                       value="<%= request.getParameter("title") != null ? request.getParameter("title") : "" %>"
+                                       placeholder="Enter title" required>
+                                <div class="form-text">A descriptive title for this record</div>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="description" class="form-label required-field">Description</label>
-                            <%--<textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter detailed description" required></textarea>--%>
-                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter detailed description" required><%=
-                            request.getParameter("description") != null ? request.getParameter("description") : "" %></textarea>
-                            <div class="form-text">Provide complete details about this record</div>
-                        </div>
+                            <div class="mb-4">
+                                <label for="description" class="form-label required-field">Description</label>
+                                <%--<textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter detailed description" required></textarea>--%>
+                                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter detailed description" required><%=
+                                request.getParameter("description") != null ? request.getParameter("description") : "" %></textarea>
+                                <div class="form-text">Provide complete details about this record</div>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="status" class="form-label">Status</label>
-                            <input class="form-control" id="status" name="status" type="text" value="Unresolved" aria-label="readonly input example" readonly>
-                            <div class="form-text">Complaints are automatically set to Unresolved status</div>
-                        </div>
+                            <div class="mb-4">
+                                <label for="status" class="form-label">Status</label>
+                                <input class="form-control" id="status" name="status" type="text" value="Unresolved" aria-label="readonly input example" readonly>
+                                <div class="form-text">Complaints are automatically set to Unresolved status</div>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="admin_remarks" class="form-label">Admin Remarks</label>
-                            <textarea class="form-control" id="admin_remarks" name="admin_remarks" rows="2" placeholder="Enter admin remarks (optional)" readonly><%=
-                            request.getParameter("admin_remarks") != null ? request.getParameter("admin_remarks") : "" %></textarea>
-                            <div class="form-text">Only admin can update remarks</div>
-                        </div>
+                            <div class="mb-4">
+                                <label for="admin_remarks" class="form-label">Admin Remarks</label>
+                                <textarea class="form-control" id="admin_remarks" name="admin_remarks" rows="2" placeholder="Enter admin remarks (optional)" readonly><%=
+                                request.getParameter("admin_remarks") != null ? request.getParameter("admin_remarks") : "" %></textarea>
+                                <div class="form-text">Only admin can update remarks</div>
+                            </div>
 
-                        <div class="d-flex justify-content-between mt-5">
-                            <%--<button type="reset" class="btn btn-outline-secondary">
-                                <i class="bi bi-x-circle"></i> Cancel
-                            </button>--%>
-                            <a class="btn btn-outline-secondary me-2" href="<%= request.getContextPath() %>/api/v1/update/complaint">
-                                <i class="bi bi-x-circle"></i> Cancel
-                            </a>
-                            <div>
-                                <%--<button type="reset" class="btn btn-warning me-2">
-                                    <i class="bi bi-arrow-counterclockwise"></i> Reset
+                            <div class="d-flex justify-content-between mt-5">
+                                <%--<button type="reset" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle"></i> Cancel
                                 </button>--%>
                                 <a class="btn btn-outline-secondary me-2" href="<%= request.getContextPath() %>/api/v1/update/complaint">
-                                    <i class="bi bi-arrow-counterclockwise"></i> Reset
+                                    <i class="bi bi-x-circle"></i> Cancel
                                 </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> update
-                                </button>
+                                <div>
+                                    <%--<button type="reset" class="btn btn-warning me-2">
+                                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                                    </button>--%>
+                                    <a class="btn btn-outline-secondary me-2" href="<%= request.getContextPath() %>/api/v1/update/complaint">
+                                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-save"></i> Update
+                                    </button>
+                                </div>
                             </div>
-                        </div>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
 
-                <div class="form-container bg-white">
-                    <div class="form-header">
-                        <h2><i class="bi bi-file-earmark-text"></i> Record List</h2>
-                        <p class="text-muted">Here’s a list of unresolved complaints you’ve submitted</p>
+                <div class="expanded-form-container bg-white">
+                    <div class="form-header-expanded">
+                        <h2><i class="bi bi-file-earmark-text me-2"></i> Record List</h2>
+                        <p class="text-muted mb-2">Here’s a list of unresolved complaints you’ve submitted</p>
                     </div>
 
-                    <table class="table table-striped table-hover text-center">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Date Submitted</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Admin Remarks</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <%--<tbody id="user-complaint-table">--%>
-                        <tbody id="user-complaint-table" data-url="/api/v1/update/complaint">
-                        <% for (int i = 0; i < userComplaintDTOS.size(); i++) {
-                            ComplaintDTO userComplaint = userComplaintDTOS.get(i);
-                        %>
-                        <tr>
-                            <th scope="row"><%= i+1 %></th>
-                            <td><%= userComplaint.getTitle() %></td>
-                            <td><%= userComplaint.getDescription() %></td>
-                            <td><%= userComplaint.getDate_submitted() != null ? userComplaint.getDate_submitted().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "" %></td>
-                            <td>
+                    <div class="table-responsive">
+                        <table class="table expanded-table table-striped table-hover text-center">
+                            <thead>
+                                <tr class="text-center">
+                                    <th style="width: 4%;">#</th>
+                                    <th style="width: 15%;">Title</th>
+                                    <th style="width: 23%;">Description</th>
+                                    <th style="width: 12%;">Date Submitted</th>
+                                    <th style="width: 8%;">Status</th>
+                                    <th style="width: 20%;">Admin Remarks</th>
+                                    <th style="width: 18%;">Action</th>
+                                </tr>
+                            </thead>
+                            <%--<tbody id="user-complaint-table">--%>
+                            <tbody id="user-complaint-table" data-url="/api/v1/update/complaint">
+                            <% for (int i = 0; i < userComplaintDTOS.size(); i++) {
+                                ComplaintDTO userComplaint = userComplaintDTOS.get(i);
+                            %>
+                            <tr>
+                                <th scope="row"><%= i+1 %></th>
+                                <td><%= userComplaint.getTitle() %></td>
+                                <td style="word-break: break-word; max-width: 300px;"><%= userComplaint.getDescription() %></td>
+                                <td><%= userComplaint.getDate_submitted() != null ? userComplaint.getDate_submitted().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "" %></td>
+                                <td>
                                 <span class="badge bg-<%= "Resolved".equals(userComplaint.getStatus()) ? "success" : "warning" %>">
                                     <%= userComplaint.getStatus() %>
                                 </span>
-                            </td>
-                            <td><%= (userComplaint.getAdmin_remarks() == null || userComplaint.getAdmin_remarks().trim().isEmpty()) ? "N/A" : userComplaint.getAdmin_remarks() %></td>
-                            <td>
-                                <%--<button type="submit" class="btn btn-outline-warning btn-sm"> Update </button>--%>
-                                <form method="get" action="<%= request.getContextPath() %>/api/v1/update/complaint" class="d-inline">
-                                    <input type="hidden" name="complaint_id" value="<%= userComplaint.getComplaint_id() %>">
-                                    <input type="hidden" name="title" value="<%= userComplaint.getTitle() %>">
-                                    <input type="hidden" name="description" value="<%= userComplaint.getDescription() %>">
-                                    <input type="hidden" name="status" value="<%= userComplaint.getStatus() %>">
-                                    <input type="hidden" name="admin_remarks" value="<%= userComplaint.getAdmin_remarks() %>">
-                                    <button type="submit" class="btn btn-outline-success btn-sm"> Update </button>
-                                </form>
-                                <form method="post" action="<%= request.getContextPath() %>/api/v1/delete/user/complaint" class="d-inline">
-                                    <input type="hidden" name="complaint_id" value="<%= userComplaint.getComplaint_id() %>">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm"
-                                            onclick="return confirm('Are you sure you want to delete this complaint?')"> Delete
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        <% } %>
+                                </td>
+                                <td style="word-break: break-word; max-width: 300px;"><%= (userComplaint.getAdmin_remarks() == null || userComplaint.getAdmin_remarks().trim().isEmpty()) ? "N/A" : userComplaint.getAdmin_remarks() %></td>
+                                <td>
+                                    <%--<button type="submit" class="btn btn-outline-warning btn-sm"> Update </button>--%>
+                                    <form method="get" action="<%= request.getContextPath() %>/api/v1/update/complaint" class="d-inline">
+                                        <input type="hidden" name="complaint_id" value="<%= userComplaint.getComplaint_id() %>">
+                                        <input type="hidden" name="title" value="<%= userComplaint.getTitle() %>">
+                                        <input type="hidden" name="description" value="<%= userComplaint.getDescription() %>">
+                                        <input type="hidden" name="status" value="<%= userComplaint.getStatus() %>">
+                                        <input type="hidden" name="admin_remarks" value="<%= userComplaint.getAdmin_remarks() %>">
+                                        <button type="submit" class="btn btn-outline-success btn-sm me-1"> Modify </button>
+                                    </form>
+                                    <form method="post" action="<%= request.getContextPath() %>/api/v1/delete/user/complaint" class="d-inline">
+                                        <input type="hidden" name="complaint_id" value="<%= userComplaint.getComplaint_id() %>">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm"
+                                                onclick="return confirm('Are you sure you want to delete this complaint?')"> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% } %>
 
-                        <% if (userComplaintDTOS.isEmpty()) { %>
-                        <tr>
-                            <td colspan="6" class="text-center">No complaints found</td>
-                        </tr>
-                        <% } %>
+                            <% if (userComplaintDTOS.isEmpty()) { %>
+                            <tr>
+                                <td colspan="6" class="text-center">No complaints found</td>
+                            </tr>
+                            <% } %>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>

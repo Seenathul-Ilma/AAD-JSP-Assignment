@@ -164,9 +164,32 @@ body {
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
+.expanded-form-container{
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.expanded-table {
+    width: 100%;
+}
+
+.expanded-table th,
+.expanded-table td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
 .form-header {
     margin-bottom: 30px;
     text-align: center;
+}
+
+.form-header-expanded {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
 }
 
 .required-field::after {
@@ -174,3 +197,4 @@ body {
     color: red;
     margin-left: 4px;
 }
+

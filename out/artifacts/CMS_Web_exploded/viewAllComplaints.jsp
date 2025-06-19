@@ -118,51 +118,53 @@
             </div>
             <% } %>
 
-            <div class="container col-lg-10 col-md-10 ms-sm-auto">
-                <div class="form-container bg-white">
-                    <div class="form-header">
-                        <h2><i class="bi bi-file-earmark-text"></i> Record Information</h2>
-                        <p class="text-muted">Below is the complete list of submitted complaints.</p>
+            <div class="container-fluid px-4">
+                <div class="expanded-form-container bg-white">
+                    <div class="form-header-expanded">
+                        <h2><i class="bi bi-file-earmark-text me-2"></i> Record Information</h2>
+                        <p class="text-muted mb-2">Below is the complete list of submitted complaints.</p>
                     </div>
 
-                    <table class="table table-striped table-hover text-center">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Date Submitted</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Admin Remarks</th>
-                        </tr>
-                        </thead>
-                        <%--<tbody id="user-complaint-table">--%>
-                        <tbody id="user-complaint-table" data-url="/api/v1/user/complaint/list">
-                        <% for (int i = 0; i < userComplaintDTOS.size(); i++) {
-                            ComplaintDTO userComplaint = userComplaintDTOS.get(i);
-                        %>
-                        <tr>
-                            <th scope="row"><%= i+1 %></th>
-                            <td><%= userComplaint.getTitle() %></td>
-                            <td><%= userComplaint.getDescription() %></td>
-                            <td><%= userComplaint.getDate_submitted() != null ? userComplaint.getDate_submitted().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "" %></td>
-                            <td>
+                    <div class="table-responsive">
+                        <table class="table expanded-table table-striped table-hover text-center">
+                            <thead>
+                                <tr class="text-center">
+                                    <th style="width: 5%;">#</th>
+                                    <th style="width: 15%;">Title</th>
+                                    <th style="width: 30%;">Description</th>
+                                    <th style="width: 15%;">Date Submitted</th>
+                                    <th style="width: 10%;">Status</th>
+                                    <th style="width: 25%;">Admin Remarks</th>
+                                </tr>
+                            </thead>
+                            <%--<tbody id="user-complaint-table">--%>
+                            <tbody id="user-complaint-table" data-url="/api/v1/user/complaint/list">
+                            <% for (int i = 0; i < userComplaintDTOS.size(); i++) {
+                                ComplaintDTO userComplaint = userComplaintDTOS.get(i);
+                            %>
+                            <tr>
+                                <th scope="row"><%= i+1 %></th>
+                                <td><%= userComplaint.getTitle() %></td>
+                                <td style="word-break: break-word; max-width: 300px;"><%= userComplaint.getDescription() %></td>
+                                <td><%= userComplaint.getDate_submitted() != null ? userComplaint.getDate_submitted().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "" %></td>
+                                <td>
                                     <span class="badge bg-<%= "Resolved".equals(userComplaint.getStatus()) ? "success" : "warning" %>">
                                         <%= userComplaint.getStatus() %>
                                     </span>
-                            </td>
-                            <td><%= (userComplaint.getAdmin_remarks() == null || userComplaint.getAdmin_remarks().trim().isEmpty()) ? "N/A" : userComplaint.getAdmin_remarks() %></td>
-                        </tr>
-                        <% } %>
+                                </td>
+                                <td style="word-break: break-word; max-width: 250px;"><%= (userComplaint.getAdmin_remarks() == null || userComplaint.getAdmin_remarks().trim().isEmpty()) ? "N/A" : userComplaint.getAdmin_remarks() %></td>
+                            </tr>
+                            <% } %>
 
-                        <% if (userComplaintDTOS.isEmpty()) { %>
-                        <tr>
-                            <td colspan="6" class="text-center">No complaints found</td>
-                        </tr>
-                        <% } %>
+                            <% if (userComplaintDTOS.isEmpty()) { %>
+                            <tr>
+                                <td colspan="6" class="text-center">No complaints found</td>
+                            </tr>
+                            <% } %>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>
