@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.ijse.gdse71.dto.UserDTO;
+import lk.ijse.gdse71.model.UserModel;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
@@ -37,34 +39,28 @@ public class SignUpServlet extends HttpServlet {
         String password = req.getParameter("password");
         String role = req.getParameter("role");
 
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
+
+        UserModel userModel = new UserModel(dataSource);
+        UserDTO userDTO = new UserDTO(UUID.randomUUID().toString(), name, email, password, role);
+
         try {
-            ServletContext servletContext = req.getServletContext();
-            BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
 
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(
-                         "INSERT INTO user (user_id, name, email, password, role) VALUES (?, ?, ?, ?, ?)"
-                 )) {
+            boolean isSaved = userModel.saveUser(userDTO);
 
-                stmt.setString(1, UUID.randomUUID().toString());
-                stmt.setString(2, name);
-                stmt.setString(3, email);
-                stmt.setString(4, password);
-                stmt.setString(5, role);
-
-                int executed = stmt.executeUpdate();
-
-                if (executed > 0) {
-                    resp.sendRedirect(req.getContextPath() + "/login.jsp");
-                } else {
-                    req.setAttribute("error", "Failed to sign up..!");
-                    req.getRequestDispatcher("/signup.jsp").forward(req, resp);
-                }
+            if (isSaved) {
+                System.out.println("User Saved");
+                resp.sendRedirect(req.getContextPath() + "/login.jsp");
+            } else {
+                req.setAttribute("error", "Failed to sign up..!");
+                req.getRequestDispatcher("/register.jsp").forward(req, resp);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "An error occurred during registration");
-            req.getRequestDispatcher("/signup.jsp").forward(req, resp);
+            req.getRequestDispatcher("/register.jsp").forward(req, resp);
         }
     }
 

@@ -35,6 +35,9 @@ public class AuthFilter implements Filter {
         String uri = req.getRequestURI();
         boolean isAllowedRequest = uri.endsWith("login.jsp") ||
                 uri.contains("signin") ||
+                uri.endsWith("register.jsp") ||
+                uri.contains("register") ||
+                uri.contains("signup") ||
                 uri.contains("css") ||
                 uri.contains("js") ||
                 uri.contains("assets") ||
