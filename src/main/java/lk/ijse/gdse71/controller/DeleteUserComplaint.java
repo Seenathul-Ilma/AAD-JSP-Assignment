@@ -26,7 +26,7 @@ import java.sql.SQLException;
  * --------------------------------------------
  **/
 
-@WebServlet("/api/v1/delete/user/complaint")
+@WebServlet("/api/v1/delete/complaint")
 public class DeleteUserComplaint extends HttpServlet {
 
     @Override
@@ -51,7 +51,12 @@ public class DeleteUserComplaint extends HttpServlet {
             session.removeAttribute("flash_error");
         }
 
-        req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
+        if(session.getAttribute("role").equals("admin")) {
+            req.getRequestDispatcher("/editAdminComplaint.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
+        }
+
     }
 
     @Override
@@ -93,7 +98,10 @@ public class DeleteUserComplaint extends HttpServlet {
             e.printStackTrace();
         }
 
-        resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
-
+        if(session.getAttribute("role").equals("admin")) {
+            resp.sendRedirect(req.getContextPath() + "/api/v1/admin/update/complaint");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
+        }
     }
 }

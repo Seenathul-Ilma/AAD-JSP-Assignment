@@ -250,7 +250,7 @@
                                         <input type="hidden" name="admin_remarks" value="<%= userComplaint.getAdmin_remarks() %>">
                                         <button type="submit" class="btn btn-outline-success btn-sm me-1"> Modify </button>
                                     </form>
-                                    <form method="post" action="<%= request.getContextPath() %>/api/v1/delete/user/complaint" class="d-inline">
+                                    <form method="post" action="<%= request.getContextPath() %>/api/v1/delete/complaint" class="d-inline">
                                         <input type="hidden" name="complaint_id" value="<%= userComplaint.getComplaint_id() %>">
                                         <button type="submit" class="btn btn-outline-danger btn-sm"
                                                 onclick="return confirm('Are you sure you want to delete this complaint?')"> Delete
@@ -262,7 +262,7 @@
 
                             <% if (userComplaintDTOS.isEmpty()) { %>
                             <tr>
-                                <td colspan="6" class="text-center">No complaints found</td>
+                                <td colspan="7" class="text-center">No unresolved complaints found</td>
                             </tr>
                             <% } %>
 
