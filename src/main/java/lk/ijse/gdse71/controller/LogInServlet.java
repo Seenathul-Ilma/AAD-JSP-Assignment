@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lk.ijse.gdse71.dto.UserDTO;
+import lk.ijse.gdse71.model.UserModel;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
@@ -38,45 +40,37 @@ public class LogInServlet extends HttpServlet {
         String password = req.getParameter("password");
         //String role = req.getParameter("role");
 
+        ServletContext servletContext = req.getServletContext();
+        BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
+
+        UserModel userModel = new UserModel(dataSource);
+
         try {
-            ServletContext servletContext = req.getServletContext();
-            BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
 
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(
-                         "SELECT * FROM user WHERE email=? AND password=?"
-                 )) {
+            UserDTO userDTO = userModel.getUserByCredentials(email, password);
 
-                stmt.setString(1, email);
-                stmt.setString(2, password);
+            if (userDTO != null) {
+                System.out.println("User Found!");
 
-                ResultSet rs = stmt.executeQuery();
+                HttpSession session = req.getSession(true);
+                session.setAttribute("user_id", userDTO.getUserId());
+                session.setAttribute("name", userDTO.getName());
+                session.setAttribute("email", userDTO.getEmail());
+                session.setAttribute("role", userDTO.getRole());
 
-                if (rs.next()) {
-                    HttpSession session = req.getSession(true);
-
-                    session.setAttribute("user_id", rs.getString("user_id"));
-                    session.setAttribute("name", rs.getString("name"));
-                    session.setAttribute("email", rs.getString("email"));
-                    session.setAttribute("role", rs.getString("role"));
-
-                    // Redirect by role
-                    String role = rs.getString("role").toLowerCase().trim();
-                    String redirectPath = req.getContextPath() +
-                            ("admin".equals(role) ? "/adminDashboard.jsp" : "/employeeDashboard.jsp");
-
-                    resp.sendRedirect(resp.encodeRedirectURL(redirectPath));
-                    //resp.sendRedirect(req.getContextPath() + "/dashboard.jsp");
-                } else {
-                    req.setAttribute("error", "Invalid credentials");
-                    req.getRequestDispatcher("/login.jsp").forward(req, resp);
-                }
+                String redirectPath = req.getContextPath() +
+                        (userDTO.getRole().equalsIgnoreCase("admin") ? "/adminDashboard.jsp" : "/employeeDashboard.jsp");
+                resp.sendRedirect(resp.encodeRedirectURL(redirectPath));
+            } else {
+                req.setAttribute("error", "Invalid credentials");
+                req.getRequestDispatcher("/login.jsp").forward(req, resp);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             req.setAttribute("error", "An error occurred during log in.");
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
+
     }
 
 
