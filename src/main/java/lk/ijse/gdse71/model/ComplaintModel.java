@@ -4,11 +4,8 @@ import lk.ijse.gdse71.dto.ComplaintDTO;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * --------------------------------------------
@@ -64,9 +61,9 @@ public class ComplaintModel {
         }
     }
 
-    public boolean updateUnresolvedComplaintsByUser(String complaintId, String title, String description, String status) {
+    /*public boolean updateUnresolvedComplaintsByUser(String complaintId, String title, String description, String status, String admin_remarks) {
         //String sql = "UPDATE complaint SET title = ?, description = ?, status = ? WHERE complaint_id = ? AND user_id = ?";
-        String sql = "UPDATE complaint SET title = ?, description = ?, status = ? WHERE complaint_id = ?";
+        String sql = "UPDATE complaint SET title = ?, description = ?, status = ?, admin_remarks = ? WHERE complaint_id = ?";
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -74,7 +71,8 @@ public class ComplaintModel {
             stmt.setString(1, title);
             stmt.setString(2, description);
             stmt.setString(3, status);
-            stmt.setString(4, complaintId);
+            stmt.setString(4, admin_remarks);
+            stmt.setString(5, complaintId);
             //stmt.setString(5, userId);
 
             return stmt.executeUpdate() > 0;
@@ -82,7 +80,7 @@ public class ComplaintModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     public List<ComplaintDTO> getAllComplaintsByUser(String userId) {
         List<ComplaintDTO> complaintDTOS = new ArrayList<>();

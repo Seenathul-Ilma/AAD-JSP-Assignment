@@ -94,6 +94,7 @@ public class updateComplaintServlet extends HttpServlet {
         String desc = req.getParameter("description");
         String status = req.getParameter("status");
         String complaintId = req.getParameter("complaint_id");
+        String admin_remarks = req.getParameter("admin_remarks");
         //String date = req.getParameter("date_submitted");
 
         if (complaintId == null || complaintId.isEmpty()) {
@@ -111,7 +112,8 @@ public class updateComplaintServlet extends HttpServlet {
 
         try {
 
-            boolean isUpdated = complaintModel.updateUnresolvedComplaintsByUser(complaintId, title, desc, status);
+            //boolean isUpdated = complaintModel.updateUnresolvedComplaintsByUser(complaintId, title, desc, status, admin_remarks);
+            boolean isUpdated = complaintModel.updateComplaints(complaintId, title, desc, status, admin_remarks);
 
             if (isUpdated) {
                 session.setAttribute("flash_success", "Complaint updated Successfully");
