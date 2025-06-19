@@ -182,4 +182,24 @@ public class ComplaintModel {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean updateComplaints(String complaintId, String title, String desc, String status, String adminRemarks) {
+        //String sql = "UPDATE complaint SET title = ?, description = ?, status = ? WHERE complaint_id = ? AND user_id = ?";
+        String sql = "UPDATE complaint SET title = ?, description = ?, status = ?, admin_remarks = ? WHERE complaint_id = ?";
+
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, title);
+            stmt.setString(2, desc);
+            stmt.setString(3, status);
+            stmt.setString(4, adminRemarks);
+            stmt.setString(5, complaintId);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
