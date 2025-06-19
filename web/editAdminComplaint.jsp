@@ -49,21 +49,21 @@
                 <li class="nav-item">
                     <%--<a class="nav-link active" href="employeeDashboard.jsp">--%>
                     <a class="nav-link" href="<%= request.getContextPath() %>/adminDashboard.jsp">
-                        <i class="fas fa-tachometer-alt"></i>
+                        <i class="fas fa-tachometer-alt me-2"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
                     <%--<a class="nav-link" href="viewComplaint.jsp">--%>
                     <a class="nav-link" href="<%= request.getContextPath() %>/api/v1/admin/complaint/list">
-                        <i class="fas fa-clipboard-list"></i>
+                        <i class="fas fa-clipboard-list me-2"></i>
                         Complaint Log
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/api/v1/admin/update/complaint">
-                        <i class="fas fa-hourglass-half"></i>
-                        Pending Actions
+                        <i class="bi bi-wrench-adjustable-circle me-2"></i>
+                        Handle Complaints
                     </a>
                 </li>
             </ul>
@@ -99,8 +99,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="<%= request.getContextPath() %>/api/v1/admin/update/complaint">
-                                <i class="fas fa-hourglass-half me-2"></i>
-                                Pending Actions
+                                <i class="bi bi-wrench-adjustable-circle me-2"></i>
+                                Handle Complaints
                             </a>
                         </li>
                     </ul>
