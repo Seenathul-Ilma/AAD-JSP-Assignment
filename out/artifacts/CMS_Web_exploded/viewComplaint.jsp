@@ -158,7 +158,7 @@
                                 <th scope="row"><%= i+1 %></th>
                                 <td><%= userComplaint.getTitle() %></td>
                                 <td><%= userComplaint.getDescription() %></td>
-                                <td><%= userComplaint.getDate_submitted() %></td>
+                                <td><%= userComplaint.getDate_submitted() != null ? userComplaint.getDate_submitted().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "" %></td>
                                 <td>
                                     <span class="badge bg-<%= "Resolved".equals(userComplaint.getStatus()) ? "success" : "warning" %>">
                                         <%= userComplaint.getStatus() %>

@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -55,7 +56,7 @@ public class NewComplaintServlet extends HttpServlet {
                 userId,
                 title,
                 desc,
-                LocalDate.now(),
+                LocalDateTime.now(),
                 status,
                 admin_remark
         );

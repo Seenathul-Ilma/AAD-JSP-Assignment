@@ -5,6 +5,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,7 @@ public class ComplaintModel {
             stmt.setString(2, complaintDTO.getUser_id());
             stmt.setString(3, complaintDTO.getTitle());
             stmt.setString(4, complaintDTO.getDescription());
-            stmt.setDate(5, Date.valueOf(complaintDTO.getDate_submitted()));
+            stmt.setTimestamp(5, Timestamp.valueOf(complaintDTO.getDate_submitted()));
             stmt.setString(6, complaintDTO.getStatus());
             stmt.setString(7, complaintDTO.getAdmin_remarks());
 
@@ -102,7 +103,7 @@ public class ComplaintModel {
                 complaintDTO.setUser_id(rs.getString("user_id"));
                 complaintDTO.setTitle(rs.getString("title"));
                 complaintDTO.setDescription(rs.getString("description"));
-                complaintDTO.setDate_submitted(rs.getDate("date_submitted").toLocalDate());
+                complaintDTO.setDate_submitted(rs.getTimestamp("date_submitted").toLocalDateTime());
                 complaintDTO.setStatus(rs.getString("status"));
                 complaintDTO.setAdmin_remarks(rs.getString("admin_remarks"));
 
@@ -136,7 +137,7 @@ public class ComplaintModel {
                 complaintDTO.setUser_id(rs.getString("user_id"));
                 complaintDTO.setTitle(rs.getString("title"));
                 complaintDTO.setDescription(rs.getString("description"));
-                complaintDTO.setDate_submitted(rs.getDate("date_submitted").toLocalDate());
+                complaintDTO.setDate_submitted(rs.getTimestamp("date_submitted").toLocalDateTime());
                 complaintDTO.setStatus(rs.getString("status"));
                 complaintDTO.setAdmin_remarks(rs.getString("admin_remarks"));
 
@@ -168,7 +169,7 @@ public class ComplaintModel {
                 complaintDTO.setUser_id(rs.getString("user_id"));
                 complaintDTO.setTitle(rs.getString("title"));
                 complaintDTO.setDescription(rs.getString("description"));
-                complaintDTO.setDate_submitted(rs.getDate("date_submitted").toLocalDate());
+                complaintDTO.setDate_submitted(rs.getTimestamp("date_submitted").toLocalDateTime());
                 complaintDTO.setStatus(rs.getString("status"));
                 complaintDTO.setAdmin_remarks(rs.getString("admin_remarks"));
 

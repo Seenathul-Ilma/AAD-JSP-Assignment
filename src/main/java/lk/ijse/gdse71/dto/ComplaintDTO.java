@@ -3,6 +3,7 @@ package lk.ijse.gdse71.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -26,7 +27,8 @@ public class ComplaintDTO {
     private String user_id;
     private String title;
     private String description;
-    private LocalDate date_submitted;
+    //private LocalDate date_submitted;
+    private LocalDateTime date_submitted;
     private String status;
     private String admin_remarks;
 }
