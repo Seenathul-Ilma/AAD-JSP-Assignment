@@ -85,7 +85,7 @@ public class ComplaintModel {
     public List<ComplaintDTO> getAllComplaintsByUser(String userId) {
         List<ComplaintDTO> complaintDTOS = new ArrayList<>();
 
-        String sql = "SELECT complaint_id, user_id, title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ? ORDER BY date_submitted DESC";
+        String sql = "SELECT complaint_id, user_id, title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ? ORDER BY date_submitted ASC";
         String sqlQuery = "SELECT * FROM complaint WHERE user_id = ? ORDER BY date_submitted DESC";
 
         try(Connection conn = dataSource.getConnection();
@@ -118,7 +118,7 @@ public class ComplaintModel {
     public List<ComplaintDTO> getAllUnresolvedComplaintsByUser(String userId, String status) {
         List<ComplaintDTO> complaintDTOS = new ArrayList<>();
 
-        String sql = "SELECT complaint_id, user_id, title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ? AND status = ? ORDER BY date_submitted DESC";
+        String sql = "SELECT complaint_id, user_id, title, description, date_submitted, status, admin_remarks FROM complaint WHERE user_id = ? AND status = ? ORDER BY date_submitted ASC";
         String sqlQuery = "SELECT * FROM complaint WHERE user_id = ?, status = ? ORDER BY date_submitted DESC";
 
         try(Connection conn = dataSource.getConnection();
@@ -152,7 +152,7 @@ public class ComplaintModel {
     public List<ComplaintDTO> getAllComplaints() {
         List<ComplaintDTO> complaintDTOS = new ArrayList<>();
 
-        String sql = "SELECT complaint_id, user_id, title, description, date_submitted, status, admin_remarks FROM complaint ORDER BY date_submitted DESC";
+        String sql = "SELECT complaint_id, user_id, title, description, date_submitted, status, admin_remarks FROM complaint ORDER BY date_submitted ASC";
         String sqlQuery = "SELECT * FROM complaint ORDER BY date_submitted DESC";
 
         try(Connection conn = dataSource.getConnection();
