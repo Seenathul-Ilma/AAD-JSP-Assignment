@@ -11,9 +11,6 @@ import lk.ijse.gdse71.model.ComplaintModel;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 /**
  * --------------------------------------------
@@ -27,7 +24,7 @@ import java.sql.SQLException;
  **/
 
 @WebServlet("/api/v1/delete/complaint")
-public class DeleteUserComplaint extends HttpServlet {
+public class DeleteComplaint extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
