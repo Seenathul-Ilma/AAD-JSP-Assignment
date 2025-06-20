@@ -70,4 +70,5 @@ public class ComplaintStatsModel {
     public int getTotalComplaints() {
         return getCount("SELECT COUNT(*) FROM complaint WHERE user_id = ?");
     }
+
 }

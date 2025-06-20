@@ -78,10 +78,10 @@ document.addEventListener("DOMContentLoaded", function (){
         });
     }
 
-    // to filter items at live (while typing)
+    // to filter complaints at live (while typing)
     $("#search_complaint_input").on("keyup", filterItems);
 
-    // to filter items after click search btn
+    // to filter complaints after click search btn
     $('#search_complaint_btn').on('click', function (e) {
         e.preventDefault();
         filterItems();

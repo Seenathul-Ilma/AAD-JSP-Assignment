@@ -100,5 +100,6 @@ public class DeleteComplaint extends HttpServlet {
         } else {
             resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
         }
+
     }
 }

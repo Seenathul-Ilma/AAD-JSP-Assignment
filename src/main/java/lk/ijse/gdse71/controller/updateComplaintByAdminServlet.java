@@ -125,4 +125,5 @@ public class updateComplaintByAdminServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/api/v1/admin/update/complaint");
         }
     }
+
 }

@@ -66,5 +66,6 @@
     <script src="<%= request.getContextPath() %>/lib/jquery-3.7.1.min.js"></script>
     <script src="<%= request.getContextPath() %>/js/validation.js"></script>
 
+
 </body>
 </html>

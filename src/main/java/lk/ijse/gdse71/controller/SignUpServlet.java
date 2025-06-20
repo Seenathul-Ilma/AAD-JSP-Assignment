@@ -62,6 +62,7 @@ public class SignUpServlet extends HttpServlet {
             req.setAttribute("error", "An error occurred during registration");
             req.getRequestDispatcher("/register.jsp").forward(req, resp);
         }
+
     }
 
 }

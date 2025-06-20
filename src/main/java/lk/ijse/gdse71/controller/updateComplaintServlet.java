@@ -132,5 +132,6 @@ public class updateComplaintServlet extends HttpServlet {
             session.setAttribute("flash_error", "Something went wrong..!");
             resp.sendRedirect(req.getContextPath() + "/api/v1/update/complaint");
         }
+
     }
 }

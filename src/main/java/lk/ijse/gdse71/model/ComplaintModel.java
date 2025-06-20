@@ -199,5 +199,6 @@ public class ComplaintModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

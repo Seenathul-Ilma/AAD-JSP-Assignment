@@ -31,4 +31,5 @@ public class ComplaintDTO {
     private LocalDateTime date_submitted;
     private String status;
     private String admin_remarks;
+
 }

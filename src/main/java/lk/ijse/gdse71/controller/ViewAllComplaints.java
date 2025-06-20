@@ -56,7 +56,6 @@ public class ViewAllComplaints extends HttpServlet {
             req.setAttribute("error", "Failed load your complaint list.");
             req.getRequestDispatcher("/viewAllComplaints.jsp").forward(req, resp);
         }
-
     }
 
 }

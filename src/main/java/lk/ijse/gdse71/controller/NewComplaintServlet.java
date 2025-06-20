@@ -85,4 +85,5 @@ public class NewComplaintServlet extends HttpServlet {
         req.getRequestDispatcher("/newComplaint.jsp").forward(req, resp);
 
     }
+
 }
