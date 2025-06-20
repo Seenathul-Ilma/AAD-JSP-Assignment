@@ -34,7 +34,8 @@ public class ComplaintStatsModel {
     }
 
     public int getPendingComplaints(String userId) throws Exception {
-        return getCount("SELECT COUNT(*) FROM complaint WHERE status = 'Unresolved' AND user_id = ?", userId);
+        //return getCount("SELECT COUNT(*) FROM complaint WHERE status = 'Unresolved' AND user_id = ?", userId);
+        return getCount("SELECT COUNT(*) FROM complaint WHERE status = 'Queued' AND user_id = ?", userId);
     }
 
     private int getCount(String query, String userId) throws Exception {
@@ -62,7 +63,8 @@ public class ComplaintStatsModel {
     }
 
     public int getPendingComplaints() {
-        return getCount("SELECT COUNT(*) FROM complaint WHERE status = 'Unresolved' AND user_id = ?");
+        //return getCount("SELECT COUNT(*) FROM complaint WHERE status = 'Unresolved' AND user_id = ?");
+        return getCount("SELECT COUNT(*) FROM complaint WHERE status = 'Queued' AND user_id = ?");
     }
 
     public int getTotalComplaints() {

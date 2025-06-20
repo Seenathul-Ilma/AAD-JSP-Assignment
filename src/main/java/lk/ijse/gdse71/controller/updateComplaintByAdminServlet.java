@@ -65,7 +65,7 @@ public class updateComplaintByAdminServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("error", "Failed load your unresolved complaint list.");
+            req.setAttribute("error", "Failed load complaint list.");
             req.getRequestDispatcher("/editAdminComplaint.jsp").forward(req, resp);
         }
 

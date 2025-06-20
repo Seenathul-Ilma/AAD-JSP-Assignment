@@ -172,7 +172,7 @@
                             <div class="mb-4">
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-select" id="status" name="status" aria-label="Complaint Status">
-                                    <option value="Unresolved" <%= "Unresolved".equals(request.getParameter("status")) ? "selected" : "" %>>Unresolved</option>
+                                    <option value="Queued" <%= "Queued".equals(request.getParameter("status")) ? "selected" : "" %>>Queued</option>
                                     <option value="Resolved" <%= "Resolved".equals(request.getParameter("status")) ? "selected" : "" %>>Resolved</option>
                                 </select>
                                 <div class="form-text">Only admin can update the status</div>
@@ -210,12 +210,27 @@
                 </div>
 
                 <div class="expanded-form-container bg-white">
-                    <div class="form-header-expanded">
+                    <%--<div class="form-header-expanded">
                         <h2><i class="bi bi-file-earmark-text me-2"></i> Record List</h2>
                         <p class="text-muted mb-2">Here’s a list of unresolved complaints you’ve submitted</p>
-                    </div>
+                    </div>--%>
+                        <div class="form-header-expanded d-flex justify-content-between align-items-center flex-wrap mb-3">
+                            <div>
+                                <h2 class="mb-1">
+                                    <i class="bi bi-file-earmark-text me-2"></i> Record Information
+                                </h2>
+                                <p class="text-muted mb-0">Below is the complete list of submitted complaints.</p>
+                            </div>
+                            <form class="d-flex search mt-2 mt-md-0" role="search">
+                                <input class="form-control form-control-sm me-2" id="search_complaint_input" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-secondary text-dark btn-sm" type="submit" id="search_complaint_btn">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                        </div>
 
-                    <div class="table-responsive">
+
+                        <div class="table-responsive">
                         <table class="table expanded-table table-striped table-hover text-center">
                             <thead>
                             <tr class="text-center">
@@ -229,7 +244,7 @@
                             </tr>
                             </thead>
                             <%--<tbody id="user-complaint-table">--%>
-                            <tbody id="user-complaint-table" data-url="/api/v1/admin/update/complaint">
+                            <tbody id="complaint-table" data-url="/api/v1/admin/update/complaint">
                             <% for (int i = 0; i < userComplaintDTOS.size(); i++) {
                                 ComplaintDTO userComplaint = userComplaintDTOS.get(i);
                             %>

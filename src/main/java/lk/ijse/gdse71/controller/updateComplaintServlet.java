@@ -51,7 +51,8 @@ public class updateComplaintServlet extends HttpServlet {
         ComplaintModel complaintModel = new ComplaintModel(dataSource);
 
         try {
-            List<ComplaintDTO> complaintDTOS = complaintModel.getAllUnresolvedComplaintsByUser(userId, "Unresolved");
+            //List<ComplaintDTO> complaintDTOS = complaintModel.getAllUnresolvedComplaintsByUser(userId, "Unresolved");
+            List<ComplaintDTO> complaintDTOS = complaintModel.getAllUnresolvedComplaintsByUser(userId, "Queued");
             req.setAttribute("complaintDTOS", complaintDTOS);
 
             Object success = session.getAttribute("flash_success");
@@ -70,7 +71,8 @@ public class updateComplaintServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("error", "Failed load your unresolved complaint list.");
+            //req.setAttribute("error", "Failed load your unresolved complaint list.");
+            req.setAttribute("error", "Failed load your queued complaint list.");
             req.getRequestDispatcher("/editUserComplaint.jsp").forward(req, resp);
         }
 

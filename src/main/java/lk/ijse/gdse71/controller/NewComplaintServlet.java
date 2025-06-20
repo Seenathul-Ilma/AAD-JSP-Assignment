@@ -49,7 +49,8 @@ public class NewComplaintServlet extends HttpServlet {
         String title = req.getParameter("title");
         String desc = req.getParameter("description");
         String admin_remark = "";
-        String status = "Unresolved";
+        //String status = "Unresolved";
+        String status = "Queued";
 
         ComplaintDTO complaintDTO = new ComplaintDTO(
                 UUID.randomUUID().toString(),

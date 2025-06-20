@@ -166,8 +166,8 @@
 
                             <div class="mb-4">
                                 <label for="status" class="form-label">Status</label>
-                                <input class="form-control" id="status" name="status" type="text" value="Unresolved" aria-label="readonly input example" readonly>
-                                <div class="form-text">New Complaints are automatically set to Unresolved status</div>
+                                <input class="form-control" id="status" name="status" type="text" value="Queued" aria-label="readonly input example" readonly>
+                                <div class="form-text">New Complaints are automatically set to 'Queued' status</div>
                             </div>
 
                             <div class="d-flex justify-content-between mt-5">

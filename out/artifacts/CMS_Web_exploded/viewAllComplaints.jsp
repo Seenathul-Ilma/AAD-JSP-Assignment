@@ -134,10 +134,24 @@
 
             <div class="container-fluid px-4">
                 <div class="expanded-form-container bg-white">
-                    <div class="form-header-expanded">
+                    <%--<div class="form-header-expanded">
                         <h2><i class="bi bi-file-earmark-text me-2"></i> Record Information</h2>
                         <p class="text-muted mb-2">Below is the complete list of submitted complaints.</p>
-                    </div>
+                    </div>--%>
+                        <div class="form-header-expanded d-flex justify-content-between align-items-center flex-wrap mb-3">
+                            <div>
+                                <h2 class="mb-1">
+                                    <i class="bi bi-file-earmark-text me-2"></i> Record Information
+                                </h2>
+                                <p class="text-muted mb-0">Below is the complete list of submitted complaints.</p>
+                            </div>
+                            <form class="d-flex search mt-2 mt-md-0" role="search">
+                                <input class="form-control form-control-sm me-2" id="search_complaint_input" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-secondary text-dark btn-sm" type="submit" id="search_complaint_btn">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                        </div>
 
                     <div class="table-responsive">
                         <table class="table expanded-table table-striped table-hover text-center">
@@ -152,7 +166,7 @@
                                 </tr>
                             </thead>
                             <%--<tbody id="user-complaint-table">--%>
-                            <tbody id="user-complaint-table" data-url="/api/v1/user/complaint/list">
+                            <tbody id="complaint-table" data-url="/api/v1/user/complaint/list">
                             <% for (int i = 0; i < userComplaintDTOS.size(); i++) {
                                 ComplaintDTO userComplaint = userComplaintDTOS.get(i);
                             %>

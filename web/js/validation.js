@@ -71,4 +71,20 @@ document.addEventListener("DOMContentLoaded", function (){
 
     });
 
+    function filterItems() {
+        var value = $(this).val().toLowerCase();
+        $("#complaint-table tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    }
+
+    // to filter items at live (while typing)
+    $("#search_complaint_input").on("keyup", filterItems);
+
+    // to filter items after click search btn
+    $('#search_complaint_btn').on('click', function (e) {
+        e.preventDefault();
+        filterItems();
+    });
+
 });
