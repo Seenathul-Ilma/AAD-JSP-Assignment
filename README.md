@@ -45,6 +45,63 @@ Each user type has their own dashboard with relevant stats and actions.
 
 ---
 
+
+## 🔧 How to Run Locally
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Seenathul-Ilma/AAD-JSP-Assignment.git
+cd CMS
+```   
+
+### 2. Set up the MySQL database
+
+```sql
+CREATE DATABASE complaintdb;
+USE complaintdb;
+
+CREATE TABLE user (
+  user_id VARCHAR(255) PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100),
+  password VARCHAR(255),
+  role VARCHAR(20)
+);
+
+CREATE TABLE complaint (
+  complaint_id VARCHAR(255) PRIMARY KEY,
+  user_id VARCHAR(255),
+  title VARCHAR(150),
+  description TEXT,
+  date_submitted DATETIME,
+  status VARCHAR(100),
+  admin_remarks TEXT,
+  FOREIGN KEY (user_id) REFERENCES user(user_id)
+);
+```  
+
+### 3. Configure Database Connection
+Configure your BasicDataSource with:
+```
+BasicDataSource ds = new BasicDataSource();
+ds.setUrl("jdbc:mysql://localhost:3306/complaintdb");
+ds.setUsername("your-username");
+ds.setPassword("your-password");
+ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+
+ServletContext context = getServletContext();
+context.setAttribute("dataSource", ds);
+```
+
+📌 Place this in an AppInitServlet with loadOnStartup = 1 or use a ServletContextListener to ensure it initializes on server start.
+
+### 4. Deploy on Apache Tomcat
+Build the WAR or deploy the project folder to webapps/
+
+Start the Tomcat server
+
+Visit: http://localhost:8080/CMS_Web_exploded/
+
 ## 💡 Future Improvements
 
 - Password encryption using BCrypt for enhanced security
